@@ -1,0 +1,6 @@
+python-multipart>=0.0.5
+uvicorn
+fastapi-user-auth
+aiosqlite
+alembic
+pydantic[dotenv]
