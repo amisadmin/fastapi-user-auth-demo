@@ -4,3 +4,4 @@ fastapi-user-auth
 aiosqlite
 alembic
 pydantic[dotenv]
+python-jose
