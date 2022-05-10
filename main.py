@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from starlette.responses import RedirectResponse
-from core.adminsite import site, auth
+from core.adminsite import site, auth, scheduler
 
 app = FastAPI(debug=True)
 # 导入已注册的后台管理类
@@ -18,6 +18,7 @@ async def index():
 
 @app.on_event("startup")
 async def startup():
+    scheduler.start()
     await site.create_db_and_tables()
     await auth.create_role_user(role_key='admin')
     await auth.create_role_user(role_key='vip')
