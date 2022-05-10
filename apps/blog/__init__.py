@@ -7,3 +7,5 @@ def setup(app: FastAPI):
     # 2. 注册普通路由
     from .apis import router
     app.include_router(router)
+    # 3. 导入定时任务
+    from . import jobs
