@@ -1,14 +1,14 @@
 from datetime import date
-
-from fastapi_amis_admin.utils.db import SqlalchemyAsyncClient
-from fastapi_user_auth.auth import Auth
-from fastapi_user_auth.auth.backends.jwt import JwtTokenStore
 from fastapi_user_auth.site import AuthAdminSite
-from sqlalchemy.ext.asyncio import create_async_engine
 from fastapi_scheduler import SchedulerAdmin
 
 from core.settings import settings
 
+# from fastapi_amis_admin.utils.db import SqlalchemyAsyncClient
+# from fastapi_user_auth.auth import Auth
+# from fastapi_user_auth.auth.backends.jwt import JwtTokenStore
+# from sqlalchemy.ext.asyncio import create_async_engine
+#
 # # 创建异步数据库引擎
 # engine = create_async_engine(url=settings.database_url_async, echo=settings.debug, future=True)
 #
@@ -21,7 +21,6 @@ from core.settings import settings
 
 site = AuthAdminSite(settings)
 auth = site.auth
-
 
 # 创建定时任务调度器`SchedulerAdmin`实例
 scheduler = SchedulerAdmin.bind(site)
@@ -44,4 +43,3 @@ def cron_task_test():
 @scheduler.scheduled_job('date', run_date=date(2022, 11, 11))
 def date_task_test():
     print('date task is run...')
-

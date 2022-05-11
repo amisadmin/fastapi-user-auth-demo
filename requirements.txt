@@ -3,5 +3,9 @@ uvicorn
 fastapi-user-auth
 aiosqlite
 alembic
-pydantic[dotenv]
+pydantic[dotenv]~=1.9.0
 fastapi-scheduler
+fastapi~=0.75.0
+SQLAlchemy~=1.4.32
+sqlmodel~=0.0.6
+starlette~=0.17.1

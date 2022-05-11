@@ -30,4 +30,4 @@ async def update_article(request: Request, id: int,
     stmt = update(Article).where(Article.id == id).values({'create_time': datetime.datetime.now()})
     result = await session.execute(stmt)
     await session.commit()
-    return await read_article(request,id, session)
+    return await read_article(request, id, session)
