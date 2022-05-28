@@ -1,0 +1,7 @@
+uvicorn~=0.17.6
+pydantic[dotenv]~=1.9.0
+aiosqlite~=0.17.0
+fastapi-amis-admin
+fastapi-user-auth
+fastapi-scheduler
+alembic~=1.7.6

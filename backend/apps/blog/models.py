@@ -1,11 +1,12 @@
 from datetime import datetime
 from typing import Optional, List
+
+import sqlmodel
 from fastapi_amis_admin.amis.components import InputRichText, InputImage, ColumnImage
 from fastapi_amis_admin.models.enums import IntegerChoices
 from fastapi_amis_admin.models.fields import Field
 from fastapi_user_auth.auth.models import User
 from sqlalchemy import Column, String
-from sqlmodel import SQLModel, Relationship
 
 
 class ArticleStatus(IntegerChoices):
@@ -15,16 +16,24 @@ class ArticleStatus(IntegerChoices):
     disabled = 3, '已禁用'
 
 
-class Category(SQLModel, table=True):
-    __tablename__ = 'blog_category'
+# Create your models here.
+
+class BaseSQLModel(sqlmodel.SQLModel):
     id: int = Field(default=None, primary_key=True, nullable=False)
+
+    class Config:
+        use_enum_values = True
+
+
+class Category(BaseSQLModel, table=True):
+    __tablename__ = 'blog_category'
     name: str = Field(title='CategoryName', sa_column=Column(String(100), unique=True, index=True, nullable=False))
     description: str = Field(default='', title='Description', amis_form_item='textarea')
     status: bool = Field(None, title='status')
-    articles: List["Article"] = Relationship(back_populates="category")
+    articles: List["Article"] = sqlmodel.Relationship(back_populates="category")
 
 
-class ArticleTagLink(SQLModel, table=True):
+class ArticleTagLink(sqlmodel.SQLModel, table=True):
     __tablename__ = 'blog_article_tags'
     tag_id: Optional[int] = Field(
         default=None, foreign_key="blog_tag.id", primary_key=True
@@ -34,16 +43,14 @@ class ArticleTagLink(SQLModel, table=True):
     )
 
 
-class Tag(SQLModel, table=True):
+class Tag(BaseSQLModel, table=True):
     __tablename__ = 'blog_tag'
-    id: int = Field(default=None, primary_key=True, nullable=False)
     name: str = Field(..., title='TagName', sa_column=Column(String(255), unique=True, index=True, nullable=False))
-    articles: List["Article"] = Relationship(back_populates="tags", link_model=ArticleTagLink)
+    articles: List["Article"] = sqlmodel.Relationship(back_populates="tags", link_model=ArticleTagLink)
 
 
-class Article(SQLModel, table=True):
+class Article(BaseSQLModel, table=True):
     __tablename__ = 'blog_article'
-    id: int = Field(default=None, primary_key=True, nullable=False)
     title: str = Field(title='ArticleTitle', max_length=200)
     img: str = Field(None, title='ArticleImage', max_length=300,
                      amis_form_item=InputImage(maxLength=1, maxSize=2 * 1024 * 1024,
@@ -56,12 +63,9 @@ class Article(SQLModel, table=True):
     source: str = Field(default='', title='ArticleSource', max_length=200)
 
     category_id: Optional[int] = Field(default=None, foreign_key="blog_category.id", title='CategoryId')
-    category: Optional[Category] = Relationship(back_populates="articles")
+    category: Optional[Category] = sqlmodel.Relationship(back_populates="articles")
 
-    tags: List[Tag] = Relationship(back_populates="articles", link_model=ArticleTagLink)
+    tags: List[Tag] = sqlmodel.Relationship(back_populates="articles", link_model=ArticleTagLink)
 
     user_id: int = Field(default=None, foreign_key="auth_user.id", title='UserId')
-    user: User = Relationship()
-
-    class Config:
-        use_enum_values = True
+    user: User = sqlmodel.Relationship()

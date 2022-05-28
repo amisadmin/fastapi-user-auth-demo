@@ -1,7 +1,9 @@
 from datetime import datetime, timedelta
 from typing import List, Dict, Any
+
 from fastapi_amis_admin.amis.components import PageSchema, TableColumn
 from fastapi_amis_admin.amis_admin import admin
+from fastapi_amis_admin.amis_admin.admin import AdminApp
 from fastapi_amis_admin.crud.schema import Paginator
 from fastapi_user_auth.auth.models import User
 from pydantic import BaseModel
@@ -9,6 +11,17 @@ from sqlmodel.sql.expression import Select, select
 from starlette.requests import Request
 
 from apps.blog.models import Category, Article, Tag
+from core.adminsite import site
+
+
+@site.register_admin
+class BlogApp(admin.AdminApp):
+    page_schema = PageSchema(label='博客应用', icon='fa fa-wordpress')
+    router_prefix = '/blog'
+
+    def __init__(self, app: "AdminApp"):
+        super().__init__(app)
+        self.register_admin(CategoryAdmin, ArticleAdmin, TagAdmin)
 
 
 class CategoryAdmin(admin.ModelAdmin):

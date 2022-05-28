@@ -1,6 +1,6 @@
-from datetime import date
+from datetime import datetime
+
 from fastapi_user_auth.site import AuthAdminSite
-from fastapi_scheduler import SchedulerAdmin
 
 from core.settings import settings
 
@@ -22,8 +22,20 @@ from core.settings import settings
 site = AuthAdminSite(settings)
 auth = site.auth
 
+from fastapi_scheduler import SchedulerAdmin
+
+# # 自定义定时任务调度器
+# from apscheduler.schedulers.asyncio import AsyncIOScheduler
+# from apscheduler.jobstores.redis import RedisJobStore
+# # 使用`RedisJobStore`创建任务存储
+# scheduler = AsyncIOScheduler(jobstores={'default':RedisJobStore(db=2,host="127.0.0.1",port=6379,password="test")})
+# scheduler = SchedulerAdmin.bind(site,scheduler=scheduler)
+
 # 创建定时任务调度器`SchedulerAdmin`实例
+
 scheduler = SchedulerAdmin.bind(site)
+
+
 
 
 # 添加定时任务,参考官方文档: https://apscheduler.readthedocs.io/en/master/
@@ -40,6 +52,6 @@ def cron_task_test():
 
 
 # use when you want to run the job just once at a certain point of time
-@scheduler.scheduled_job('date', run_date=date(2022, 11, 11))
+@scheduler.scheduled_job('date', run_date=datetime(2022, 11, 11,1,2,3))
 def date_task_test():
     print('date task is run...')

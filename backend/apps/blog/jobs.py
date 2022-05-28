@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 
 from core.adminsite import scheduler
 
@@ -17,6 +17,6 @@ def cron_task_test():
 
 
 # use when you want to run the job just once at a certain point of time
-@scheduler.scheduled_job('date', run_date=date(2022, 11, 11))
+@scheduler.scheduled_job('date', run_date=datetime(2022, 11, 11, 1, 1, 1))
 def date_task_test():
     print('blog date task is run...')
