@@ -52,6 +52,6 @@ def cron_task_test():
 
 
 # use when you want to run the job just once at a certain point of time
-@scheduler.scheduled_job('date', run_date=datetime(2022, 11, 11,1,2,3))
+@scheduler.scheduled_job('date', run_date=datetime(2022, 11, 11, 1, 2, 3))
 def date_task_test():
     print('date task is run...')

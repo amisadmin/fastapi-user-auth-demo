@@ -16,4 +16,3 @@ class Settings(AmisSettings):
 
 
 settings = Settings(_env_file=os.path.join(BASE_DIR, '.env'))
-print('settings',settings)
