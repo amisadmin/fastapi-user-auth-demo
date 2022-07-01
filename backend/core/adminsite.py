@@ -36,8 +36,6 @@ from fastapi_scheduler import SchedulerAdmin
 scheduler = SchedulerAdmin.bind(site)
 
 
-
-
 # 添加定时任务,参考官方文档: https://apscheduler.readthedocs.io/en/master/
 # use when you want to run the job at fixed intervals of time
 @scheduler.scheduled_job('interval', seconds=300)

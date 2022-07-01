@@ -6,7 +6,8 @@ from fastapi_amis_admin.amis.components import InputRichText, InputImage, Column
 from fastapi_amis_admin.models.enums import IntegerChoices
 from fastapi_amis_admin.models.fields import Field
 from fastapi_user_auth.auth.models import User
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, select
+from sqlalchemy.orm import Session
 
 
 class ArticleStatus(IntegerChoices):
@@ -29,7 +30,7 @@ class Category(BaseSQLModel, table=True):
     __tablename__ = 'blog_category'
     name: str = Field(title='CategoryName', sa_column=Column(String(100), unique=True, index=True, nullable=False))
     description: str = Field(default='', title='Description', amis_form_item='textarea')
-    status: bool = Field(None, title='status')
+    status: bool = Field(False, title='status')
     articles: List["Article"] = sqlmodel.Relationship(back_populates="category")
 
 
@@ -69,3 +70,14 @@ class Article(BaseSQLModel, table=True):
 
     user_id: int = Field(default=None, foreign_key="auth_user.id", title='UserId')
     user: User = sqlmodel.Relationship()
+
+    @staticmethod
+    def check_update_permission(session: Session, user: User, item_id: List[str]):
+        # 管理员可以修改全部文章, 并且可以批量修改.
+        if user.has_requires(session, roles=['admin']):
+            return True
+        # 非管理员,只能修改自己的文章,并且不可批量修改.
+        if len(item_id) > 1:
+            return False
+        stmt = select(1).where(Article.id == item_id[0], Article.user_id == user.id)
+        return bool(session.scalar(stmt))

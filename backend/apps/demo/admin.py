@@ -1,7 +1,6 @@
 from fastapi_amis_admin import amis
-from fastapi_amis_admin import amis_admin as admin
-from fastapi_amis_admin.amis import PageSchema
-from fastapi_amis_admin.amis_admin.admin import AdminApp
+from fastapi_amis_admin import admin
+from fastapi_amis_admin.admin import AdminApp
 
 from core.adminsite import site
 
@@ -30,5 +29,5 @@ class DemoApp(admin.AdminApp):
 @site.register_admin
 class AmisEditorAdmin(admin.IframeAdmin):
     group_schema = None
-    page_schema = PageSchema(label='AmisEditorDemo', icon='fa fa-edit', sort=-100)
+    page_schema = amis.PageSchema(label='AmisEditorDemo', icon='fa fa-edit', sort=-100)
     src = 'https://aisuda.github.io/amis-editor-demo/'

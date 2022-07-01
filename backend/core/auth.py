@@ -1,7 +1,7 @@
 from datetime import date
 
+from fastapi_amis_admin import admin
 from fastapi_amis_admin.amis import PageSchema
-from fastapi_amis_admin.amis_admin import admin
 from fastapi_amis_admin.models.fields import Field
 from fastapi_user_auth.app import UserAuthApp
 from fastapi_user_auth.auth.models import BaseUser, BaseRBAC, Group

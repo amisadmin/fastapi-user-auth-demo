@@ -1,13 +1,13 @@
 from datetime import datetime, timedelta
 from typing import List, Dict, Any
 
+from fastapi_amis_admin import admin
+from fastapi_amis_admin.admin import AdminApp
 from fastapi_amis_admin.amis.components import PageSchema, TableColumn
-from fastapi_amis_admin.amis_admin import admin
-from fastapi_amis_admin.amis_admin.admin import AdminApp
 from fastapi_amis_admin.crud.schema import Paginator
 from fastapi_user_auth.auth.models import User
 from pydantic import BaseModel
-from sqlmodel.sql.expression import Select, select
+from sqlmodel.sql.expression import Select
 from starlette.requests import Request
 
 from apps.blog.models import Category, Article, Tag
@@ -81,7 +81,7 @@ class ArticleAdmin(admin.ModelAdmin):
         return bool(
             await self.site.auth.requires(response=False)(request)
             and request.user.create_time < datetime.now() - timedelta(days=3)
-        )
+        ) or await self.site.auth.requires(roles='admin', response=False)(request)
 
     async def has_delete_permission(
             self, request: Request, item_id: List[str], **kwargs
@@ -96,18 +96,7 @@ class ArticleAdmin(admin.ModelAdmin):
         if await self.site.auth.requires(response=False)(request):
             if item_id is None:
                 return True
-            async with self.site.db.session_maker() as session:
-                # 管理员可以修改全部文章, 并且可以批量修改.
-                if await request.user.has_role(['admin'], session):
-                    return True
-                # 非管理员,只能修改自己的文章,并且不可批量修改.
-                result = await session.execute(
-                    select(Article.id).where(
-                        Article.id == item_id[0], Article.user_id == request.user.id
-                    ).limit(1)
-                )
-            if result.first():
-                return True
+            return await self.site.db.async_run_sync(Article.check_update_permission, request.user, item_id)
         return False
 
     async def on_create_pre(

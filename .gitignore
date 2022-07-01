@@ -139,4 +139,4 @@ dmypy.json
 cython_debug/
 
 /.idea/
-fastapi_user_auth_demo/backend/admisadmin.db
+*.db

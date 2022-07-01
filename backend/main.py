@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from sqlmodel import SQLModel
 from starlette.responses import RedirectResponse
 
 from core.adminsite import site, auth, scheduler
@@ -23,7 +24,7 @@ site.mount_app(app)
 # 添加启动运行事件
 @app.on_event("startup")
 async def startup():
-    await site.create_db_and_tables()
+    await site.db.async_run_sync(SQLModel.metadata.create_all, is_session=False)
     await auth.create_role_user(role_key='admin')
     await auth.create_role_user(role_key='vip')
     await auth.create_role_user(role_key='test')
