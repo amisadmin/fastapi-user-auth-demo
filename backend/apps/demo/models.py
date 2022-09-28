@@ -2,8 +2,8 @@ import sqlmodel
 from fastapi_amis_admin import amis
 from fastapi_amis_admin.models.fields import Field
 
-
 # Create your models here.
+
 
 class BaseSQLModel(sqlmodel.SQLModel):
     id: int = Field(default=None, primary_key=True, nullable=False)

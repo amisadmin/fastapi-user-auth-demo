@@ -24,8 +24,14 @@ See [Docs](https://docs.amis.work/)
 ### Install and run:
 
 ```shell
-cd fastapi_user_auth_demo
-./scripts/run.sh
+# install pdm
+pip install --user pdm
+
+# install dependencies
+pdm install
+
+# run server
+pdm run run
 ```
 
 ## Demo

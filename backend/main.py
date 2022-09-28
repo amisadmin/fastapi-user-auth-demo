@@ -1,12 +1,15 @@
+from core.adminsite import auth, scheduler, site
+from core.settings import settings
 from fastapi import FastAPI
 from sqlmodel import SQLModel
+from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import RedirectResponse
-
-from core.adminsite import site, auth, scheduler
-from core.settings import settings
 
 # 创建FastAPI实例
 app = FastAPI(debug=settings.debug)
+
+# 将一个SQLAlchemy会话连接绑定到传入的HTTP请求会话上下文，可以通过`site.db.session`访问会话对象
+app.add_middleware(BaseHTTPMiddleware, dispatch=site.db.asgi_dispatch)
 
 # 安装应用demo
 from apps import demo
@@ -25,14 +28,14 @@ site.mount_app(app)
 @app.on_event("startup")
 async def startup():
     await site.db.async_run_sync(SQLModel.metadata.create_all, is_session=False)
-    await auth.create_role_user(role_key='admin')
-    await auth.create_role_user(role_key='vip')
-    await auth.create_role_user(role_key='test')
+    await auth.create_role_user(role_key="admin")
+    await auth.create_role_user(role_key="vip")
+    await auth.create_role_user(role_key="test")
     scheduler.start()
 
 
 # 注册首页路由
-@app.get('/')
+@app.get("/")
 async def index():
     return RedirectResponse(url=site.router_path)
 
@@ -45,7 +48,7 @@ app.add_middleware(
     allow_origins=settings.allow_origins,  # 允许访问的源
     allow_credentials=True,  # 支持 cookie
     allow_methods=["*"],  # 允许使用的请求方法
-    allow_headers=["*"]  # 允许携带的 Headers
+    allow_headers=["*"],  # 允许携带的 Headers
 )
 
 # 2.配置 Swagger UI CDN
