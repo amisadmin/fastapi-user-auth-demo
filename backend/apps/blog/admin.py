@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Any, Dict, List
 
-from fastapi_amis_admin.crud.parser import LabelField
+from fastapi_amis_admin.crud.parser import LabelField, PropertyField
 from fastapi_amis_admin.models import Field
 
 from apps.blog.models import Article, Category, Tag
@@ -67,6 +67,13 @@ class ArticleAdmin(admin.ModelAdmin):
     search_fields = [Article.title, Category.name, User.username]
     # 配置关联模型
     link_model_fields = [Article.tags]
+    # 读取查看表单字段
+    read_fields = [
+        Article,
+        PropertyField(name="category", type_=Category),
+        PropertyField(name="user", type_=User),
+        PropertyField(name="tags", type_=List[Tag]),
+    ]
 
     # 自定义查询选择器
     async def get_select(self, request: Request) -> Select:
