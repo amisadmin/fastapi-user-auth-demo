@@ -48,12 +48,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "asgiref"
-version = "3.5.2"
-requires_python = ">=3.7"
-summary = "ASGI specs, helper code, and adapters"
-
-[[package]]
 name = "backports.zoneinfo"
 version = "0.2.1"
 requires_python = ">=3.6"
@@ -119,40 +113,39 @@ dependencies = [
 
 [[package]]
 name = "fastapi-amis-admin"
-version = "0.2.2"
+version = "0.2.5"
 requires_python = ">=3.7"
-editable = true
-path = "I:/Python/Project/WWW/fastapi-amis-admin/fastapi_amis_admin"
 summary = "FastAPI-Amis-Admin is a high-performance, efficient and easily extensible FastAPI admin framework. Inspired by Django-admin, and has as many powerful functions as Django-admin. "
 dependencies = [
     "aiofiles>=0.17.0",
     "fastapi>=0.68.0",
     "python-multipart>=0.0.5",
-    "sqlalchemy-database<0.1.0,>=0.0.8",
+    "sqlalchemy-database<0.1.0,>=0.0.9",
     "sqlmodel>=0.0.7",
 ]
 
 [[package]]
 name = "fastapi-scheduler"
-version = "0.0.8"
+version = "0.0.9"
 requires_python = ">=3.7"
 summary = "FastAPI-Scheduler is a simple scheduled task management FastAPI extension based on APScheduler."
 dependencies = [
     "APScheduler>=3.8.0",
-    "fastapi-amis-admin<0.3.0,>=0.2.2",
+    "fastapi-amis-admin<0.3.0,>=0.2.3",
 ]
 
 [[package]]
 name = "fastapi-user-auth"
-version = "0.2.2"
+version = "0.2.4"
 requires_python = ">=3.7"
 summary = "FastAPI-User-Auth is a simple and powerful FastAPI user RBAC authentication and authorization library. Based on FastAPI-Amis-Admin and provides a freely extensible visual management interface."
 dependencies = [
     "bcrypt>=4.0.0",
     "email-validator",
-    "fastapi-amis-admin<0.3.0,>=0.2.0",
+    "fastapi-amis-admin<0.3.0,>=0.2.4",
     "passlib>=1.7.4",
     "pydantic>=1.9",
+    "sqlalchemy-database>=0.0.10",
     "sqlmodelx>=0.0.2",
 ]
 
@@ -343,10 +336,8 @@ dependencies = [
 
 [[package]]
 name = "sqlalchemy-database"
-version = "0.0.8"
+version = "0.0.10"
 requires_python = ">=3.7"
-editable = true
-path = "I:/Python/Project/WWW/fastapi-amis-admin/sqlalchemy_database"
 summary = "SQLAlchemy-Database provides shortcut functions to common database operations for SQLAlchemy ORM."
 dependencies = [
     "sqlalchemy",
@@ -374,7 +365,7 @@ dependencies = [
 
 [[package]]
 name = "sqlmodelx"
-version = "0.0.2"
+version = "0.0.3"
 requires_python = ">=3.7"
 summary = "SQLModelX is an extension of the SQLModel library."
 dependencies = [
@@ -422,11 +413,10 @@ dependencies = [
 
 [[package]]
 name = "uvicorn"
-version = "0.17.6"
+version = "0.18.3"
 requires_python = ">=3.7"
 summary = "The lightning-fast ASGI server."
 dependencies = [
-    "asgiref>=3.4.0",
     "click>=7.0",
     "h11>=0.8",
 ]
@@ -450,7 +440,7 @@ summary = "Backport of pathlib-compatible object wrapper for zip files"
 
 [metadata]
 lock_version = "4.0"
-content_hash = "sha256:d714e6acd9992d747309f732764ae69445f12e371c0ea634b442af758477a138"
+content_hash = "sha256:f80c3308f2a1fe3c25a666d40368a58912ddd19aa79e8e20daeed10b0de3ada4"
 
 [metadata.files]
 "aiofiles 22.1.0" = [
@@ -472,10 +462,6 @@ content_hash = "sha256:d714e6acd9992d747309f732764ae69445f12e371c0ea634b442af758
 "apscheduler 3.9.1" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/3a/7c/f21a6fb73810191d16162f3fce325ff2a62673f63223c390bea48741ea00/APScheduler-3.9.1.tar.gz", hash = "sha256:65e6574b6395498d371d045f2a8a7e4f7d50c6ad21ef7313d15b1c7cf20df1e3"},
     {url = "https://mirrors.aliyun.com/pypi/packages/e4/9f/c3937d4babe62504b874d4bf2c0d85aa69c7f59fa84cf6050f3b9dc5d83e/APScheduler-3.9.1-py2.py3-none-any.whl", hash = "sha256:ddc25a0ddd899de44d7f451f4375fb971887e65af51e41e5dcf681f59b8b2c9a"},
-]
-"asgiref 3.5.2" = [
-    {url = "https://mirrors.aliyun.com/pypi/packages/1f/35/e7d59b92ceffb1dc62c65156278de378670b46ab2364a3ea7216fe194ba3/asgiref-3.5.2.tar.gz", hash = "sha256:4a29362a6acebe09bf1d6640db38c1dc3d9217c68e6f9f6204d72667fc19a424"},
-    {url = "https://mirrors.aliyun.com/pypi/packages/af/6d/ea3a5c3027c3f14b0321cd4f7e594c776ebe64e4b927432ca6917512a4f7/asgiref-3.5.2-py3-none-any.whl", hash = "sha256:1d2880b792ae8757289136f1db2b7b99100ce959b2aa57fd69dab783d05afac4"},
 ]
 "backports.zoneinfo 0.2.1" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/1a/ab/3e941e3fcf1b7d3ab3d0233194d99d6a0ed6b24f8f956fc81e47edc8c079/backports.zoneinfo-0.2.1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:7b0a64cda4145548fed9efc10322770f929b944ce5cee6c0dfe0c87bf4c0c8c9"},
@@ -537,13 +523,13 @@ content_hash = "sha256:d714e6acd9992d747309f732764ae69445f12e371c0ea634b442af758
     {url = "https://mirrors.aliyun.com/pypi/packages/f2/74/15805b9921c0fa99a732bbab71fc548a269d027b6540f48043f87338a273/fastapi-0.85.0.tar.gz", hash = "sha256:bb219cfafd0d2ccf8f32310c9a257a06b0210bd8e2a03706a6f5a9f9f1416878"},
     {url = "https://mirrors.aliyun.com/pypi/packages/f8/f6/5334a17a8acb95b2b71825db6c8c3d2b984d1d0c31266fcda02480ab62ab/fastapi-0.85.0-py3-none-any.whl", hash = "sha256:1803d962f169dc9f8dde54a64b22eb16f6d81573f54401971f90f0a67234a8b4"},
 ]
-"fastapi-scheduler 0.0.8" = [
-    {url = "https://mirrors.aliyun.com/pypi/packages/45/6c/c02a2bc177b04f282e0674a910a95d2b768b4cd74e9c8071a7528cad7cd5/fastapi_scheduler-0.0.8.tar.gz", hash = "sha256:ba9c579407e359a63bd4c70a908dfbd3e74cd4714b311b6014764917ceb313f4"},
-    {url = "https://mirrors.aliyun.com/pypi/packages/8e/50/a7f42a5680b33fae825ee40800cc24089575cc6f699035ba188f7d60c5b8/fastapi_scheduler-0.0.8-py3-none-any.whl", hash = "sha256:4cd8ab154e77e15e4e589efe17c5cbd13d4798921b2c763b4233aff3b5413e10"},
+"fastapi-scheduler 0.0.9" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/06/97/787e50a86c96359da97ff09be688bf17d43c18c7dd3f7e6bc4880716958f/fastapi_scheduler-0.0.9-py3-none-any.whl", hash = "sha256:b97c680a59ec6e1f21f213710fab79cfa5518a8a49f3ad31c357c8d242238761"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/ec/65/5d320fef4848223561db28c12c887c88e1177f1b6afeb67d177bb96e77f0/fastapi_scheduler-0.0.9.tar.gz", hash = "sha256:78c342d6b43da81023c5ed42db83f1e41afa4abfa398b09b47d46a17cc9e39fe"},
 ]
-"fastapi-user-auth 0.2.2" = [
-    {url = "https://mirrors.aliyun.com/pypi/packages/3a/7c/55d8165aea5e21b86f0c8b1d2a27f49d865183b1a7ac697b4d2906f575a5/fastapi_user_auth-0.2.2-py3-none-any.whl", hash = "sha256:32d246715dac6c711aa1ca12b749d667954ccf57147422d4a710f905dc094024"},
-    {url = "https://mirrors.aliyun.com/pypi/packages/d8/71/ed32d36556d637a6cf48de9f8d4cb396f20600d0a8c81115e648b38165a5/fastapi_user_auth-0.2.2.tar.gz", hash = "sha256:9ea1b957f79ff130a36f7f5a0dc6ca15174569caba561470e02ef4384b8b2cdd"},
+"fastapi-user-auth 0.2.4" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/06/6a/7b0001586562855b8a98fe0f1da9693fadd5b80dc309ea61f73dcddea7eb/fastapi_user_auth-0.2.4-py3-none-any.whl", hash = "sha256:e340c4444abbe6d59ebf9f89849a89112d93d98beb5398347e51a626da2fb7d7"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/57/3d/3201952ffa4af21f598644c3dc216057f12606b472a8beffe0af0fae0408/fastapi_user_auth-0.2.4.tar.gz", hash = "sha256:47adf581d25fd4699ccfa9903686375a22abc4d683a3230c0d0fe3e33c05eba8"},
 ]
 "filelock 3.8.0" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/94/b3/ff2845971788613e646e667043fdb5f128e2e540aefa09a3c55be8290d6d/filelock-3.8.0-py3-none-any.whl", hash = "sha256:617eb4e5eedc82fc5f47b6d61e4d11cb837c56cb4544e39081099fa17ad109d4"},
@@ -870,6 +856,10 @@ content_hash = "sha256:d714e6acd9992d747309f732764ae69445f12e371c0ea634b442af758
     {url = "https://mirrors.aliyun.com/pypi/packages/fe/28/f22792eee334cd83a15ef34b825761ee057d330b9b24d3f1496b95faa557/SQLAlchemy-1.4.41-cp311-cp311-macosx_10_15_x86_64.whl", hash = "sha256:90484a2b00baedad361402c257895b13faa3f01780f18f4a104a2f5c413e4536"},
     {url = "https://mirrors.aliyun.com/pypi/packages/ff/1c/55bf52c1961ce01164835047ed2c09e44b76d1f18a75841715626f2786b1/SQLAlchemy-1.4.41-cp27-cp27mu-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:f37fa70d95658763254941ddd30ecb23fc4ec0c5a788a7c21034fc2305dab7cc"},
 ]
+"sqlalchemy-database 0.0.10" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/12/89/9cc2875e9af38ec4e41fc681715b2b1390f6f751e647bc8646a9b9ce84d3/sqlalchemy_database-0.0.10.tar.gz", hash = "sha256:a325517c17654d63f8591fab4f14cbc9ad5a3f99c531688d30108e7dcb35996e"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/2d/ec/131e1cf0ad87d2d3f59db2508eab19f09a6fb57ad9f18cf9aab72e283295/sqlalchemy_database-0.0.10-py3-none-any.whl", hash = "sha256:6d05950dc7a401a3e96448c2682610e43596d2d22c3b2a2595a9e0ef2d4289bf"},
+]
 "sqlalchemy2-stubs 0.0.2a27" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/bf/4e/2f6b738a97f6ad2c538f851992bf477313faba42e2b3be495da34c91c0df/sqlalchemy2-stubs-0.0.2a27.tar.gz", hash = "sha256:f79bce50b7837a2c2374ef4480b41e2b8a8226f313f347dc2a70526a4191db93"},
     {url = "https://mirrors.aliyun.com/pypi/packages/f4/08/54a5a9153a2ada666ba91ee508433ac6a39fc13bfc2b0bdb3777d3cf6651/sqlalchemy2_stubs-0.0.2a27-py3-none-any.whl", hash = "sha256:6cea12fec3c261f6e0e14a95d2cc4914e373095e68ec4fc2eb473183ac2b17a2"},
@@ -878,9 +868,9 @@ content_hash = "sha256:d714e6acd9992d747309f732764ae69445f12e371c0ea634b442af758
     {url = "https://mirrors.aliyun.com/pypi/packages/64/ba/ad07004536e94e71f99aaae5e667bb6f7230f7e0fbc0b0266e88960dda5f/sqlmodel-0.0.8.tar.gz", hash = "sha256:3371b4d1ad59d2ffd0c530582c2140b6c06b090b32af9b9c6412986d7b117036"},
     {url = "https://mirrors.aliyun.com/pypi/packages/90/63/65f95cf5902ccdfccec99de87666b5e039589c19db7ab62b3770171e5685/sqlmodel-0.0.8-py3-none-any.whl", hash = "sha256:0fd805719e0c5d4f22be32eb3ffc856eca3f7f20e8c7aa3e117ad91684b518ee"},
 ]
-"sqlmodelx 0.0.2" = [
-    {url = "https://mirrors.aliyun.com/pypi/packages/ce/24/9caf875efcdea161268b2de878abdf9ee10252a17e8a1995cce890488d1a/sqlmodelx-0.0.2.tar.gz", hash = "sha256:26a76f3f44db690ab2ff52c8ce93ffa89e5b5b644274235f7cdeb397dc80e9e7"},
-    {url = "https://mirrors.aliyun.com/pypi/packages/db/9e/06e44b285de9f9d90e0b9f41e8e9c38435aaea69efb09ac55e8d9097de02/sqlmodelx-0.0.2-py3-none-any.whl", hash = "sha256:23bb38b1fa2f78a8993c6882eb03540bda8e66be9885e762997b672610260612"},
+"sqlmodelx 0.0.3" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/ab/02/d78015e18c321521f17ffddb3d7954fb25e03fad18167163888c2cfad78e/sqlmodelx-0.0.3-py3-none-any.whl", hash = "sha256:95772afcae93227d779476386b42cf2d00d1417278858ac6bcb36cddada680e5"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/d0/a4/0d341c24b1aba466a9181b3129ce79a63d5c3224a74becf06b1715333b77/sqlmodelx-0.0.3.tar.gz", hash = "sha256:4c0894b71bdbd406dd793f841dcf5e9242f6c73ad34a940e3413a093862c790e"},
 ]
 "starlette 0.20.4" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/51/37/8ac52116984d6a0d8502ec2c7e4a4a78f862b76410cdb1a4bcb384c91cb3/starlette-0.20.4-py3-none-any.whl", hash = "sha256:c0414d5a56297d37f3db96a84034d61ce29889b9eaccf65eb98a0b39441fcaa3"},
@@ -902,9 +892,9 @@ content_hash = "sha256:d714e6acd9992d747309f732764ae69445f12e371c0ea634b442af758
     {url = "https://mirrors.aliyun.com/pypi/packages/31/b7/3bc2c1868f27677139b772e4fde95265b93151912fd90eb874827943bfcf/tzlocal-4.2-py3-none-any.whl", hash = "sha256:89885494684c929d9191c57aa27502afc87a579be5cdd3225c77c463ea043745"},
     {url = "https://mirrors.aliyun.com/pypi/packages/7d/b9/164d5f510e0547ae92280d0ca4a90407a15625901afbb9f57a19d9acd9eb/tzlocal-4.2.tar.gz", hash = "sha256:ee5842fa3a795f023514ac2d801c4a81d1743bbe642e3940143326b3a00addd7"},
 ]
-"uvicorn 0.17.6" = [
-    {url = "https://mirrors.aliyun.com/pypi/packages/36/ab/c13847c53d0624ee5a2e19c9c8d19a8cea5f865b95d08b839fac375a9e83/uvicorn-0.17.6-py3-none-any.whl", hash = "sha256:19e2a0e96c9ac5581c01eb1a79a7d2f72bb479691acd2b8921fce48ed5b961a6"},
-    {url = "https://mirrors.aliyun.com/pypi/packages/6d/7d/b97c120cad5fd1f66462afb0d5ddd043078f2380b89fccd8a97ef5c95b5c/uvicorn-0.17.6.tar.gz", hash = "sha256:5180f9d059611747d841a4a4c4ab675edf54c8489e97f96d0583ee90ac3bfc23"},
+"uvicorn 0.18.3" = [
+    {url = "https://mirrors.aliyun.com/pypi/packages/64/82/3fdff66fca901b30e42c88e0c37ada35e181074e0c4fd8d7d7525107329d/uvicorn-0.18.3-py3-none-any.whl", hash = "sha256:0abd429ebb41e604ed8d2be6c60530de3408f250e8d2d84967d85ba9e86fe3af"},
+    {url = "https://mirrors.aliyun.com/pypi/packages/6b/36/20d18a00a14d331f491340bc3a793f902a7de6b908f5b1dec74e066b80b8/uvicorn-0.18.3.tar.gz", hash = "sha256:9a66e7c42a2a95222f76ec24a4b754c158261c4696e683b9dadc72b590e0311b"},
 ]
 "virtualenv 20.16.5" = [
     {url = "https://mirrors.aliyun.com/pypi/packages/07/a3/bd699eccc596c3612c67b06772c3557fda69815972eef4b22943d7535c68/virtualenv-20.16.5.tar.gz", hash = "sha256:227ea1b9994fdc5ea31977ba3383ef296d7472ea85be9d6732e42a91c04e80da"},
