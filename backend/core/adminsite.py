@@ -1,11 +1,11 @@
 from datetime import datetime
 
+from core.auth import MyAuthAdminSite
 from core.settings import settings
-from fastapi_user_auth.site import AuthAdminSite
 from sqlalchemy_database import AsyncDatabase, Database
 
 # 创建异步数据库引擎
-async_db = AsyncDatabase.create(url=settings.database_url_async, echo=False)
+async_db = AsyncDatabase.create(url=settings.database_url_async, echo=True)
 # 创建同步数据库引擎
 sync_db = Database.create(url=settings.database_url, echo=False)
 
@@ -18,9 +18,10 @@ sync_db = Database.create(url=settings.database_url, echo=False)
 # )
 #
 # # 创建后台管理系统,在导入路由之前先实例化对象
+# from fastapi_user_auth.site import AuthAdminSite
 # site = AuthAdminSite(settings, auth=auth)
 
-site = AuthAdminSite(settings, engine=async_db.engine)
+site = MyAuthAdminSite(settings, engine=async_db)
 auth = site.auth
 
 from fastapi_scheduler import SchedulerAdmin
