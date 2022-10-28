@@ -40,10 +40,10 @@ class MyGroupAdmin(admin.ModelAdmin):
 class MyUserRoleLink(UserRoleLink, CreateTimeMixin, table=True):
     # 重写UserRoleLink模型, 并且创建id虚拟主键字段
     id: str = Field(
-        None,
-        title="虚拟主键",
-        sa_column=column_property(cast(UserRoleLink.user_id, String) + "-" + cast(UserRoleLink.role_id, String)),
+        None, title="虚拟主键",
+        sa_column=column_property(f"{cast(UserRoleLink.user_id, String)}-{cast(UserRoleLink.role_id, String)}")
     )
+
     description: str = Field(None, title="描述")
 
 

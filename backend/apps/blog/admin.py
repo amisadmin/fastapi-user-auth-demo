@@ -103,7 +103,7 @@ class ArticleAdmin(admin.ModelAdmin):
             return False
         if item_id is None:
             return True
-        return await self.site.db.async_run_sync(Article.check_update_permission, request.user, item_id, commit=False)
+        return await self.site.db.async_run_sync(Article.check_update_permission, request.user, item_id)
 
     async def on_create_pre(self, request: Request, obj: BaseModel, **kwargs) -> Dict[str, Any]:
         data = await super().on_create_pre(request, obj, **kwargs)
