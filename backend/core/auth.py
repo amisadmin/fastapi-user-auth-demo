@@ -6,7 +6,7 @@ from fastapi_amis_admin.models.fields import Field
 from fastapi_user_auth.app import UserAuthApp
 from fastapi_user_auth.auth.models import (
     CreateTimeMixin,
-    Group,
+    Role,
     User,
     UserRoleLink,
 )
@@ -23,16 +23,15 @@ class MyUser(User, table=True):
     location: str = Field(None, title="位置")
 
 
-class MyGroup(Group, table=True):
-    __tablename__ = "auth_group"  # 数据库表名,必须是这个才能覆盖默认模型
+class MyRole(Role, table=True):
+    __tablename__ = "auth_role"  # 数据库表名,必须是这个才能覆盖默认模型
     icon: str = Field(None, title="图标")
     is_active: bool = Field(default=True, title="是否激活")
 
 
-class MyGroupAdmin(admin.ModelAdmin):
-    page_schema = PageSchema(label="用户组管理", icon="fa fa-group")
-    model = MyGroup
-    link_model_fields = [Group.roles]
+class MyRoleAdmin(admin.ModelAdmin):
+    page_schema = PageSchema(label="角色管理", icon="fa fa-group")
+    model = MyRole
     readonly_fields = ["key"]
 
 
@@ -56,7 +55,7 @@ class MyUserRoleLinkAdmin(admin.ModelAdmin):
 
 
 class MyUserAuthApp(UserAuthApp):
-    GroupAdmin = MyGroupAdmin
+    RoleAdmin = MyRoleAdmin
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
