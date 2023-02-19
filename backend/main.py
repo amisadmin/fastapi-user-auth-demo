@@ -1,3 +1,5 @@
+from fastapi_amis_admin_nav.admin import NavPageAdmin
+
 from core.adminsite import auth, scheduler, site
 from core.settings import settings
 from fastapi import FastAPI
@@ -16,6 +18,8 @@ from apps import blog
 
 blog.setup(app)
 
+site.register_admin(NavPageAdmin)
+
 # 挂载后台管理系统
 site.mount_app(app)
 
@@ -24,10 +28,12 @@ site.mount_app(app)
 @app.on_event("startup")
 async def startup():
     await site.db.async_run_sync(SQLModel.metadata.create_all, is_session=False)
+    # 创建默认管理员,用户名: admin,密码: admin, 请及时修改密码!!!
     await auth.create_role_user(role_key="admin")
-    await auth.create_role_user(role_key="vip")
-    await auth.create_role_user(role_key="test")
+    # 启动定时任务
     scheduler.start()
+    # 运行后台管理系统启动事件
+    await site.fastapi.router.startup()
 
 
 # 注册首页路由
