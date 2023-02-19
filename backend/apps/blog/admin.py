@@ -4,7 +4,7 @@ from typing import Any, Dict, List
 from apps.blog.models import Article, Category, Tag
 from core.adminsite import site
 from fastapi_amis_admin import admin
-from fastapi_amis_admin.admin import AdminApp
+from fastapi_amis_admin.admin import AdminApp, PageSchemaAdmin
 from fastapi_amis_admin.amis.components import PageSchema, TableColumn
 from fastapi_amis_admin.crud.parser import LabelField, PropertyField
 from fastapi_amis_admin.crud.schema import Paginator
@@ -26,14 +26,12 @@ class BlogApp(admin.AdminApp):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    group_schema = None
     page_schema = PageSchema(label="分类管理", icon="fa fa-folder")
     model = Category
     search_fields = [Category.name]
 
 
 class TagAdmin(admin.ModelAdmin):
-    group_schema = None
     page_schema = PageSchema(label="标签管理", icon="fa fa-tags")
     model = Tag
     search_fields = [Tag.name]
@@ -41,7 +39,6 @@ class TagAdmin(admin.ModelAdmin):
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    group_schema = None
     page_schema = PageSchema(label="文章管理", icon="fa fa-file")
     model = Article
     # 配置列表展示字段
@@ -80,12 +77,12 @@ class ArticleAdmin(admin.ModelAdmin):
         return sel.join(Category, isouter=True).join(User, isouter=True)
 
     # 权限验证
-    async def has_page_permission(self, request: Request) -> bool:
+    async def has_page_permission(self, request: Request, obj: PageSchemaAdmin = None, action: str = None) -> bool:
         return True
 
-    async def has_list_permission(self, request: Request, paginator: Paginator, filter: BaseModel = None, **kwargs) -> bool:
+    async def has_list_permission(self, request: Request, paginator: Paginator, filters: BaseModel = None, **kwargs) -> bool:
         # 用户未登录,不可按标题过滤文章,并且最多每页最多只能查看10条数据.
-        return bool(await self.site.auth.requires(response=False)(request) or (paginator.perPage <= 10 and filter.title == ""))
+        return bool(await self.site.auth.requires(response=False)(request) or (paginator.perPage <= 10 and filters.title == ""))
 
     async def has_create_permission(self, request: Request, data: BaseModel, **kwargs) -> bool:
         # 用户已登录,并且注册时间大于3天,才可以发布文章

@@ -30,7 +30,6 @@ class MyGroup(Group, table=True):
 
 
 class MyGroupAdmin(admin.ModelAdmin):
-    group_schema = None
     page_schema = PageSchema(label="用户组管理", icon="fa fa-group")
     model = MyGroup
     link_model_fields = [Group.roles]
@@ -41,14 +40,16 @@ class MyUserRoleLink(UserRoleLink, CreateTimeMixin, table=True):
     # 重写UserRoleLink模型, 并且创建id虚拟主键字段
     id: str = Field(
         None, title="虚拟主键",
-        sa_column=column_property(f"{cast(UserRoleLink.user_id, String)}-{cast(UserRoleLink.role_id, String)}")
+        sa_column=column_property(
+            # 注意这里的cast, 用于将联合主键转换为字符串.不要使用format, 会导致直接识别为字符串.
+            cast(UserRoleLink.user_id, String) + "-" + cast(UserRoleLink.role_id, String)
+        )
     )
 
     description: str = Field(None, title="描述")
 
 
 class MyUserRoleLinkAdmin(admin.ModelAdmin):
-    group_schema = None
     page_schema = PageSchema(label="用户角色关系", icon="fa fa-group")
     model = MyUserRoleLink
     readonly_fields = ["id"]

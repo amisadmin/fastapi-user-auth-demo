@@ -5,7 +5,7 @@ from fastapi_amis_admin.admin import AdminApp
 # from .models import Category
 
 
-@site.register_admin
+# @site.register_admin
 class DemoApp(admin.AdminApp):
     page_schema = amis.PageSchema(label="Demo", icon="fa fa-bolt")
     router_prefix = "/demo"
@@ -18,7 +18,6 @@ class DemoApp(admin.AdminApp):
 # Register your models here.
 
 # class CategoryAdmin(admin.ModelAdmin):
-#     group_schema = None
 #     page_schema = amis.PageSchema(label='Category', icon='fa fa-folder')
 #     model = Category
 #     search_fields = [Category.name]
@@ -26,6 +25,5 @@ class DemoApp(admin.AdminApp):
 
 @site.register_admin
 class AmisEditorAdmin(admin.IframeAdmin):
-    group_schema = None
     page_schema = amis.PageSchema(label="AmisEditorDemo", icon="fa fa-edit", sort=-100)
     src = "https://aisuda.github.io/amis-editor-demo/"
