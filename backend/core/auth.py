@@ -4,12 +4,7 @@ from fastapi_amis_admin import admin
 from fastapi_amis_admin.amis import PageSchema
 from fastapi_amis_admin.models.fields import Field
 from fastapi_user_auth.app import UserAuthApp
-from fastapi_user_auth.auth.models import (
-    CreateTimeMixin,
-    Group,
-    User,
-    UserRoleLink,
-)
+from fastapi_user_auth.auth.models import CreateTimeMixin, Group, User, UserRoleLink
 from fastapi_user_auth.site import AuthAdminSite
 from sqlalchemy import String, cast
 from sqlalchemy.orm import column_property
@@ -39,11 +34,14 @@ class MyGroupAdmin(admin.ModelAdmin):
 class MyUserRoleLink(UserRoleLink, CreateTimeMixin, table=True):
     # 重写UserRoleLink模型, 并且创建id虚拟主键字段
     id: str = Field(
-        None, title="虚拟主键",
+        None,
+        title="虚拟主键",
         sa_column=column_property(
             # 注意这里的cast, 用于将联合主键转换为字符串.不要使用format, 会导致直接识别为字符串.
-            cast(UserRoleLink.user_id, String) + "-" + cast(UserRoleLink.role_id, String)
-        )
+            cast(UserRoleLink.user_id, String)
+            + "-"
+            + cast(UserRoleLink.role_id, String)
+        ),
     )
 
     description: str = Field(None, title="描述")

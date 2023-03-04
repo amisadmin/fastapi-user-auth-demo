@@ -5,7 +5,7 @@ import sqlmodel
 from fastapi_amis_admin.amis.components import ColumnImage, InputImage, InputRichText
 from fastapi_amis_admin.models.enums import IntegerChoices
 from fastapi_amis_admin.models.fields import Field
-from fastapi_user_auth.auth.models import User
+from fastapi_user_auth.auth.models import PkMixin, User
 from sqlalchemy import Column, String, select
 from sqlalchemy.orm import Session
 
@@ -20,14 +20,7 @@ class ArticleStatus(IntegerChoices):
 # Create your models here.
 
 
-class BaseSQLModel(sqlmodel.SQLModel):
-    id: int = Field(default=None, primary_key=True, nullable=False)
-
-    class Config:
-        use_enum_values = True
-
-
-class Category(BaseSQLModel, table=True):
+class Category(PkMixin, table=True):
     __tablename__ = "blog_category"
     name: str = Field(title="CategoryName", sa_column=Column(String(100), unique=True, index=True, nullable=False))
     description: str = Field(default="", title="Description", amis_form_item="textarea")
@@ -41,13 +34,13 @@ class ArticleTagLink(sqlmodel.SQLModel, table=True):
     article_id: Optional[int] = Field(default=None, foreign_key="blog_article.id", primary_key=True)
 
 
-class Tag(BaseSQLModel, table=True):
+class Tag(PkMixin, table=True):
     __tablename__ = "blog_tag"
     name: str = Field(..., title="TagName", sa_column=Column(String(255), unique=True, index=True, nullable=False))
     articles: List["Article"] = sqlmodel.Relationship(back_populates="tags", link_model=ArticleTagLink)
 
 
-class Article(BaseSQLModel, table=True):
+class Article(PkMixin, table=True):
     __tablename__ = "blog_article"
     title: str = Field(title="ArticleTitle", max_length=200)
     img: str = Field(

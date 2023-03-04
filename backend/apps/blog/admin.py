@@ -52,11 +52,11 @@ class ArticleAdmin(admin.ModelAdmin):
         TableColumn(type="tpl", label="自定义模板列", tpl='<a href="${source}" target="_blank">ID:${id},Title:${title}</a>'),
         Article.create_time,
         Article.description,
-        User.nickname.label("nickname"), # 重命名字段;也可以使用sqlalchemy函数, 例如:
+        User.nickname.label("nickname"),  # 重命名字段;也可以使用sqlalchemy函数, 例如:
         # func.count('*').label('article_count'), 注意在`get_select`中修改对应的sql查询语句
         LabelField(
             User.nickname.label("nickname2"),
-            Field("默认用户", title="发布者"), # 通过Field配置Amis表格列信息,Amis表单字段信息.
+            Field("默认用户", title="发布者"),  # 通过Field配置Amis表格列信息,Amis表单字段信息.
         ),
     ]
     # 配置模糊搜索字段
