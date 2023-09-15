@@ -3,16 +3,8 @@ from datetime import date
 from fastapi_amis_admin import admin
 from fastapi_amis_admin.amis import PageSchema
 from fastapi_amis_admin.models.fields import Field
-from fastapi_user_auth.app import UserAuthApp
-from fastapi_user_auth.auth.models import (
-    CreateTimeMixin,
-    Role,
-    User,
-    UserRoleLink,
-)
-from fastapi_user_auth.site import AuthAdminSite
-from sqlalchemy import String, cast
-from sqlalchemy.orm import column_property
+from fastapi_user_auth.admin import AuthAdminSite, UserAuthApp
+from fastapi_user_auth.auth.models import Role, User
 
 
 class MyUser(User, table=True):
@@ -32,34 +24,24 @@ class MyRole(Role, table=True):
 class MyRoleAdmin(admin.ModelAdmin):
     page_schema = PageSchema(label="角色管理", icon="fa fa-group")
     model = MyRole
-    readonly_fields = ["key"]
+    update_exclude = {"key"}
 
 
-class MyUserRoleLink(UserRoleLink, CreateTimeMixin, table=True):
-    # 重写UserRoleLink模型, 并且创建id虚拟主键字段
-    id: str = Field(
-        None, title="虚拟主键",
-        sa_column=column_property(
-            # 注意这里的cast, 用于将联合主键转换为字符串.不要使用format, 会导致直接识别为字符串.
-            cast(UserRoleLink.user_id, String) + "-" + cast(UserRoleLink.role_id, String)
-        )
-    )
-
-    description: str = Field(None, title="描述")
-
-
-class MyUserRoleLinkAdmin(admin.ModelAdmin):
-    page_schema = PageSchema(label="用户角色关系", icon="fa fa-group")
-    model = MyUserRoleLink
-    readonly_fields = ["id"]
+# class MyUserRoleLink(UserRoleLink, CreateTimeMixin, table=True):
+#     # 重写UserRoleLink模型, 并且创建id虚拟主键字段
+#     id: str = Field(
+#         None, title="虚拟主键",
+#         sa_column=column_property(
+#             # 注意这里的cast, 用于将联合主键转换为字符串.不要使用format, 会导致直接识别为字符串.
+#             cast(UserRoleLink.user_id, String) + "-" + cast(UserRoleLink.role_id, String)
+#         )
+#     )
+#
+#     description: str = Field(None, title="描述")
 
 
 class MyUserAuthApp(UserAuthApp):
     RoleAdmin = MyRoleAdmin
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.register_admin(MyUserRoleLinkAdmin)
 
 
 class MyAuthAdminSite(AuthAdminSite):

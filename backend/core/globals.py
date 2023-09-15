@@ -1,13 +1,24 @@
 from datetime import datetime
 
-from core.auth import MyAuthAdminSite
-from core.settings import settings
 from sqlalchemy_database import AsyncDatabase, Database
 
+from core.auth import MyAuthAdminSite
+from core.settings import settings
+
 # 创建异步数据库引擎
-async_db = AsyncDatabase.create(url=settings.database_url_async, echo=True)
+async_db = AsyncDatabase.create(
+    url=settings.database_url_async,
+    session_options={
+        "expire_on_commit": False,
+    },
+)
 # 创建同步数据库引擎
-sync_db = Database.create(url=settings.database_url, echo=False)
+sync_db = Database.create(
+    url=settings.database_url,
+    session_options={
+        "expire_on_commit": False,
+    },
+)
 
 # from fastapi_user_auth.auth import Auth
 # from fastapi_user_auth.auth.backends.jwt import JwtTokenStore

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from core.adminsite import scheduler
+from core.globals import scheduler
 
 
 # 添加定时任务,参考官方文档: https://apscheduler.readthedocs.io/en/master/

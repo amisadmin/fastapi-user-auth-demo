@@ -1,18 +1,9 @@
-import sqlmodel
-from fastapi_amis_admin import amis
-from fastapi_amis_admin.models.fields import Field
+
 
 # Create your models here.
 
 
-class BaseSQLModel(sqlmodel.SQLModel):
-    id: int = Field(default=None, primary_key=True, nullable=False)
-
-    class Config:
-        use_enum_values = True
-
-
-# class Category(BaseSQLModel, table=True):
+# class Category(PkMixin, table=True):
 #     __tablename__ = 'blog_category'
 #     name: str = Field(
 #         title='Category Name',

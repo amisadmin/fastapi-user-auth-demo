@@ -19,4 +19,7 @@ class Settings(admin.Settings):
     amis_pkg = "amis@1.10.2"
 
 
+# 设置FAA_GLOBALS环境变量
+os.environ.setdefault("FAA_GLOBALS", "core.globals")
+
 settings = Settings(_env_file=os.path.join(BACKEND_DIR, ".env"))

@@ -1,4 +1,4 @@
-from core.adminsite import site
+from core.globals import site
 from fastapi_amis_admin import admin, amis
 from fastapi_amis_admin.admin import AdminApp
 
