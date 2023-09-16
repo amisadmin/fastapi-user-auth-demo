@@ -16,7 +16,7 @@ class Settings(admin.Settings):
     secret_key: str = ""
     allow_origins: List[str] = []
     amis_cdn = "https://npm.elemecdn.com"
-    amis_pkg = "amis@1.10.2"
+    amis_pkg = "amis@2.8.0"
 
 
 # 设置FAA_GLOBALS环境变量
