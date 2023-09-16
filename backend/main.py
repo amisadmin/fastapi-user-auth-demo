@@ -43,13 +43,12 @@ async def startup():
     await auth.create_role_user("admin")
     # 创建默认超级管理员,用户名: root,密码: root, 请及时修改密码!!!
     await auth.create_role_user("root")
-
-    # 启动定时任务
-    scheduler.start()
-    # 运行后台管理系统启动事件
+    # 运行site的startup方法,加载casbin策略等
     await site.router.startup()
     if not auth.enforcer.enforce("u:admin", site.unique_id, "page", "page"):
         await auth.enforcer.add_policy("u:admin", site.unique_id, "page", "page", "allow")
+    # 启动定时任务
+    scheduler.start()
 
 
 # 注册首页路由
