@@ -1,9 +1,7 @@
 from datetime import date
 
-from fastapi_amis_admin import admin
-from fastapi_amis_admin.amis import PageSchema
 from fastapi_amis_admin.models.fields import Field
-from fastapi_user_auth.admin import AuthAdminSite, UserAuthApp
+from fastapi_user_auth.admin import AuthAdminSite, RoleAdmin, UserAuthApp
 from fastapi_user_auth.auth.models import Role, User
 
 
@@ -21,10 +19,8 @@ class MyRole(Role, table=True):
     is_active: bool = Field(default=True, title="是否激活")
 
 
-class MyRoleAdmin(admin.ModelAdmin):
-    page_schema = PageSchema(label="角色管理", icon="fa fa-group")
+class MyRoleAdmin(RoleAdmin):
     model = MyRole
-    update_exclude = {"key"}
 
 
 # class MyUserRoleLink(UserRoleLink, CreateTimeMixin, table=True):
