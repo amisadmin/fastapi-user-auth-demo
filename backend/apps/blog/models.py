@@ -2,8 +2,7 @@ from datetime import datetime
 from typing import List, Optional
 
 from fastapi_amis_admin.amis.components import ColumnImage, InputImage, InputRichText
-from fastapi_amis_admin.models.enums import IntegerChoices
-from fastapi_amis_admin.models.fields import Field
+from fastapi_amis_admin.models import ChoiceType,IntegerChoices,Field
 from fastapi_user_auth.auth.models import User
 from fastapi_user_auth.mixins.models import PkMixin
 from sqlalchemy import Column, String, select
@@ -45,7 +44,7 @@ class Tag(PkMixin, table=True):
 class Article(PkMixin, table=True):
     __tablename__ = "blog_article"
     title: str = Field(title="ArticleTitle", max_length=200)
-    img: str = Field(
+    img: Optional[str] = Field(
         None,
         title="ArticleImage",
         max_length=300,
@@ -53,17 +52,19 @@ class Article(PkMixin, table=True):
         amis_table_column=ColumnImage(width=100, height=60, enlargeAble=True),
     )
     description: str = Field(default="", title="ArticleDescription", amis_form_item="textarea")
-    status: ArticleStatus = Field(ArticleStatus.unpublished, title="status")
+    status: ArticleStatus = Field(ArticleStatus.unpublished, title="status",sa_type=ChoiceType(ArticleStatus))
     content: str = Field(..., title="ArticleContent", amis_form_item=InputRichText())
     create_time: Optional[datetime] = Field(default_factory=datetime.utcnow, title="CreateTime")
     source: str = Field(default="", title="ArticleSource", max_length=200)
 
     category_id: Optional[int] = Field(default=None, foreign_key="blog_category.id", title="CategoryId")
+
+    user_id: Optional[int] = Field(default=None, foreign_key="auth_user.id", title="UserId")
+
     category: Optional[Category] = Relationship(back_populates="articles")
 
     tags: List[Tag] = Relationship(back_populates="articles", link_model=ArticleTagLink)
 
-    user_id: int = Field(default=None, foreign_key="auth_user.id", title="UserId")
     user: User = Relationship()
 
     @staticmethod

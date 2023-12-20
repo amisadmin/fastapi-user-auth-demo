@@ -11,12 +11,8 @@ sys.path.append(BACKEND_DIR.__str__())
 
 class Settings(admin.Settings):
     name: str = "FastAPI-User-Auth-Demo"
-    host: str = "127.0.0.1"
-    port: int = 6699
     secret_key: str = ""
     allow_origins: List[str] = []
-    amis_cdn = "https://npm.elemecdn.com"
-    amis_pkg = "amis@2.8.0"
 
 
 # 设置FAA_GLOBALS环境变量
